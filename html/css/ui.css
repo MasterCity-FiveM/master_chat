@@ -1,0 +1,72 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'iransans';
+	font-style: normal;
+	font-weight: 200;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+body{
+	direction: rtl;
+}
+
+.ui {
+	background: rgba(255,255,255,0.6);
+	width: 700px;
+	border-radius: 10px;
+	margin: 50px auto;
+	padding: 20px;
+	display: none;
+}
+
+.chat{
+	float: left;
+	text-align: justify;
+	background: #e5e5e5;
+	padding: 10px 15px 0px 15px;
+	max-width: 100%;
+	border-radius: 10px;
+	margin-top: 5px;
+}
+.chat p{
+	color: #000;
+}
+
+.sent{
+	float: right;
+	text-align: justify;
+	background: #4c7dfe;
+	padding: 10px 15px 0px 15px;
+	max-width: 100%;
+	border-radius: 10px;
+	margin-top: 5px;
+}
+
+.error{
+	background: #912c47;
+	color: #fff;
+}
+
+.error p{
+	background: #912c47;
+	color: #fff;
+}
+
+.sent p{
+ color: #fff;
+}
+
+.name{
+	direction: ltr;
+	margin-bottom: 2px;
+}
+
+.box100{
+	overflow-x: hidden;
+}
+
+.easy-autocomplete {
+	direction: ltr;
+}
