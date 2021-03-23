@@ -12,7 +12,25 @@ while ESX == nil do
 	Citizen.Wait(1)
 end
 
-ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, type)
+ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, ctype)
+	if type(name) == 'table' then
+		for k,v in ipairs(name) do
+			namev = v:lower()
+			Commands[namev] = {}
+			Commands[namev].rank = rank
+			Commands[namev].name = namev
+			Commands[namev].cb = cb
+			Commands[namev].params = params
+			Commands[namev].help = help
+			Commands[namev].type = ctype
+			Suggestions[namev] = {}
+			Suggestions[namev].name = Commands[namev].type .. namev
+			Suggestions[namev].help = help
+		end
+
+		return
+	end
+	
 	name = name:lower()
 	Commands[name] = {}
 	Commands[name].rank = rank
@@ -20,7 +38,7 @@ ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, type)
 	Commands[name].cb = cb
 	Commands[name].params = params
 	Commands[name].help = help
-	Commands[name].type = type
+	Commands[name].type = ctype
 	Suggestions[name] = {}
 	Suggestions[name].name = Commands[name].type .. name
 	Suggestions[name].help = help

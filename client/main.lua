@@ -33,8 +33,8 @@ RegisterNUICallback('GetSuggestions', function()
 	end)
 end)
 
-RegisterNetEvent("master_keymap:n5")
-AddEventHandler("master_keymap:n5", function()
+RegisterNetEvent("master_keymap:t")
+AddEventHandler("master_keymap:t", function()
 	SendNUIMessage({
 		action = "show"
 	})
