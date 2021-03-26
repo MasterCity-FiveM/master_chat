@@ -50,9 +50,7 @@ $(document).ready(function () {
 			}
 		} else if (event.data.action == "sent_message") {
 			$(".box100").append('<div class="sent amessage"><p class="name">' + htmlEntities(event.data.name) + ':</p><p>' + htmlEntities(event.data.message) + '</p></div><div style="clear:both;"></div>');
-			
-			
-			
+
 			///CLEANUP
 			$('.box100').scrollTop($('.box100')[0].scrollHeight);
 		} else if (event.data.action == "receive_message") {
@@ -60,6 +58,8 @@ $(document).ready(function () {
 				$(".box100").append('<div class="chat amessage"><p class="name">' + htmlEntities(event.data.name) + ':</p><p>' + htmlEntities(event.data.message) + '</p></div><div style="clear:both;"></div>');
 			}else if (event.data.message_type == 'error') {
 				$(".box100").append('<div class="chat error amessage"><p class="name">' + htmlEntities(event.data.name) + ':</p><p>' + htmlEntities(event.data.message) + '</p></div><div style="clear:both;"></div>');
+			}else if (event.data.message_type == 'info') {
+				$(".box100").append('<div class="chat info amessage"><p class="name">' + htmlEntities(event.data.name) + ':</p><p>' + htmlEntities(event.data.message) + '</p></div><div style="clear:both;"></div>');
 			}
 			
 			///CLEANUP

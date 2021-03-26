@@ -41,6 +41,27 @@ AddEventHandler("master_keymap:t", function()
 	SetNuiFocus(true, true)
 end)
 
+RegisterNetEvent("chatMessage")
+AddEventHandler("chatMessage", function(msg)
+	message = {}
+	message.sender = 0
+	message.message_type = 'info'
+	message.message = msg
+	message.name = "MasterCity.ir"
+	TriggerEvent("master_chat:reciveMessage", message)
+end)
+
+RegisterNetEvent("chatMessageAlert")
+AddEventHandler("chatMessageAlert", function(msg)
+	message = {}
+	message.sender = 0
+	message.message_type = 'error'
+	message.message = msg
+	message.name = "MasterCity.ir"
+	TriggerEvent("master_chat:reciveMessage", message)
+	exports.pNotify:SendNotification({text = message.message, type = "error", layout = 'topLeft', timeout = 5000})
+end)
+
 RegisterNetEvent("master_chat:reciveMessage")
 AddEventHandler("master_chat:reciveMessage", function(message)
 	xPlayerID = GetPlayerServerId(PlayerId())
@@ -68,6 +89,13 @@ AddEventHandler("master_chat:reciveMessage", function(message)
 			})
 		end
 	elseif message.message_type == 'error' then
+		SendNUIMessage({
+			action = "receive_message",
+			message = message.message,
+			name = message.name,
+			message_type = message.message_type
+		})
+	elseif message.message_type == 'info' then
 		SendNUIMessage({
 			action = "receive_message",
 			message = message.message,

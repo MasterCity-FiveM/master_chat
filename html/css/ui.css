@@ -50,7 +50,15 @@ body{
 }
 
 .error p{
-	background: #912c47;
+	color: #fff;
+}
+
+.info{
+	background: #0081d6;
+	color: #fff;
+}
+
+.info p{
 	color: #fff;
 }
 
