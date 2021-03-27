@@ -33,7 +33,7 @@ ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, ctype
 	
 	name = name:lower()
 	Commands[name] = {}
-	Commands[name].rank = rank
+	Commands[name].rank = tonumber(rank)
 	Commands[name].name = name
 	Commands[name].cb = cb
 	Commands[name].params = params
@@ -100,11 +100,19 @@ function ExecuteMCommand(command, src, message)
 	sent_message.name = ServerName
 	sent_message.sender = 0
 	
-	--[[if Commands[name].rank > xPlayer.getRank() then
+	if Commands[command:lower()].rank > xPlayer.getRank() then
 		sent_message.message_type = 'error'
 		sent_message.message = 'شما دسترسی لازم برای اجرای این دستور را ندارید.'
 		TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
-	end]]--
+		return
+	end
+	
+	if Commands[command:lower()].rank > 0 and xPlayer.get("aduty") ~= true and command:lower() ~= 'aduty' and command:lower() ~= 'gm' then
+		sent_message.message_type = 'error'
+		sent_message.message = 'لطفا حالت گیم مستر خود را فعال کنید.'
+		TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
+		return
+	end
 	
 	if command_data.params ~= nil and #command_data.params > 0 then
 		splited_args = mysplit(message, " ") -- arg 1 is command.
