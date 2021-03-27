@@ -17,6 +17,14 @@ RegisterNUICallback("closeUI", function()
 	SetNuiFocus(false, false)
 end)
 
+RegisterNetEvent('masterking32:closeAllUI')
+AddEventHandler('masterking32:closeAllUI', function() 
+	SendNUIMessage({
+		action = "hide"
+	})
+	SetNuiFocus(false, false)
+end)
+
 RegisterNUICallback('sentMessage', function(data)
 	message = {}
 	message.message = data.message
@@ -35,6 +43,8 @@ end)
 
 RegisterNetEvent("master_keymap:t")
 AddEventHandler("master_keymap:t", function()
+	TriggerEvent("masterking32:closeAllUI")
+	Citizen.Wait(100)
 	SendNUIMessage({
 		action = "show"
 	})
