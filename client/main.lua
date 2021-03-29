@@ -72,6 +72,16 @@ AddEventHandler("chatMessageAlert", function(msg)
 	exports.pNotify:SendNotification({text = message.message, type = "error", layout = 'topLeft', timeout = 5000})
 end)
 
+RegisterNetEvent("chatMessageError")
+AddEventHandler("chatMessageError", function(name, msg)
+	message = {}
+	message.sender = 0
+	message.message_type = 'error'
+	message.message = msg
+	message.name = name
+	TriggerEvent("master_chat:reciveMessage", message)
+end)
+
 RegisterNetEvent("master_chat:reciveMessage")
 AddEventHandler("master_chat:reciveMessage", function(message)
 	xPlayerID = GetPlayerServerId(PlayerId())

@@ -1,8 +1,12 @@
 ESX = nil
-LastChats = {}
-Commands = {}
-Suggestions = {}
+LastChats, Commands, Suggestions = {}, {}, {}
 ServerName = "MasterCity.iR"
+-- Whitelist commands to run without aduty.
+Whiltelist_commands = {
+	aduty = true,
+	gm = true,
+	a = true,
+}
 
 TriggerEvent("esx:getSharedObject", function(obj) 
 	ESX = obj 
@@ -45,11 +49,13 @@ ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, ctype
 end)
 
 ESX.RegisterServerCallback('master_chat:GetSuggestions', function(source, cb)
+	ESX.RunCustomFunction("anti_ddos", source, 'master_chat:GetSuggestions', {})
 	cb(Suggestions)
 end)
 
 RegisterNetEvent('master_chat:newMessage')
 AddEventHandler('master_chat:newMessage', function(message)
+	ESX.RunCustomFunction("anti_ddos", source, 'master_chat:newMessage', {message = message})
 	_source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	if xPlayer == nil or not xPlayer or xPlayer.identifier == nil or message == nil or message.message == nil or message.message == "" then
@@ -107,7 +113,7 @@ function ExecuteMCommand(command, src, message)
 		return
 	end
 	
-	if Commands[command:lower()].rank > 0 and xPlayer.get("aduty") ~= true and command:lower() ~= 'aduty' and command:lower() ~= 'gm' then
+	if Commands[command:lower()].rank > 0 and xPlayer.get("aduty") ~= true and Whiltelist_commands[command:lower()] ~= nil then
 		sent_message.message_type = 'error'
 		sent_message.message = 'لطفا حالت گیم مستر خود را فعال کنید.'
 		TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
