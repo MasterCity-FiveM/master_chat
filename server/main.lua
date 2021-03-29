@@ -9,12 +9,21 @@ Whiltelist_commands = {
 }
 
 TriggerEvent("esx:getSharedObject", function(obj) 
-	ESX = obj 
+	ESX = obj
 end)
 
 while ESX == nil do
 	Citizen.Wait(1)
 end
+Citizen.CreateThread(function()
+	while ESX == nil or ESX.Items == nil or #ESX.Items < 1 do
+		TriggerEvent("esx:getSharedObject", function(obj) 
+			ESX = obj
+		end)
+		
+		Citizen.Wait(500)
+	end
+end)
 
 ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, ctype)
 	if type(name) == 'table' then
@@ -113,7 +122,7 @@ function ExecuteMCommand(command, src, message)
 		return
 	end
 	
-	if Commands[command:lower()].rank > 0 and xPlayer.get("aduty") ~= true and Whiltelist_commands[command:lower()] ~= nil then
+	if Commands[command:lower()].rank > 0 and xPlayer.get("aduty") ~= true and Whiltelist_commands[command:lower()] == nil then
 		sent_message.message_type = 'error'
 		sent_message.message = 'لطفا حالت گیم مستر خود را فعال کنید.'
 		TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
