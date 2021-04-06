@@ -223,6 +223,10 @@ function isCommand(message, src, sent_message)
 				TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
 				ExecuteMCommand(CommandKey, src, message)
 				return true
+			else
+				TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
+				TriggerClientEvent("master_chat:ExecClientCommand", src, message)
+				return true
 			end
 		end
 	end

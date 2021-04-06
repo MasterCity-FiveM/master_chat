@@ -31,13 +31,15 @@
 	}
 };
 
+var server_suggestions = false;
+
 $(document).ready(function () {
 	window.addEventListener("message", function (event) {
 		if (event.data.action == "show") {
 			$(".ui").fadeIn();
 			$("#message").focus();
 			$('.box100').scrollTop($('.box100')[0].scrollHeight);
-			if (AutoCompleteOptions.data.length <= 0) {
+			if (server_suggestions == false) {
 				$.post("https://master_chat/GetSuggestions", JSON.stringify({}));
 			}
 			window.scrollTo(0,document.body.scrollHeight);
@@ -46,8 +48,17 @@ $(document).ready(function () {
 		} else if (event.data.action == "suggestions") {
 			Sugs = event.data.suggestions;
 			for (var prop in Sugs) {
+				for (a in AutoCompleteOptions.data)
+				{
+					if (a.name == Sugs[prop].name) {
+						continue;
+					}
+				}
+				
 				AutoCompleteOptions.data.push({name: Sugs[prop].name, help: Sugs[prop].help});
 			}
+			
+			server_suggestions = true
 		} else if (event.data.action == "sent_message") {
 			$(".box100").append('<div class="sent amessage"><p class="name">' + htmlEntities(event.data.name) + ':</p><p>' + htmlEntities(event.data.message) + '</p></div><div style="clear:both;"></div>');
 
@@ -74,11 +85,13 @@ $(document).ready(function () {
 	document.onkeydown = function(evt) {
 		evt = evt || window.event;
 		var isEscape = false;
+		
 		if ("key" in evt) {
 			isEscape = (evt.key === "Escape" || evt.key === "Esc");
 		} else {
 			isEscape = (evt.keyCode === 27);
 		}
+		
 		if (isEscape) {
 			$.post("https://master_chat/closeUI", JSON.stringify({}));
 		}
@@ -87,9 +100,12 @@ $(document).ready(function () {
 	$(".message").on('keypress', function (e) {
 		if (e.key === 'Enter' || e.keyCode === 13) {
 			msg = $(this).val();
+
 			if(msg == "" || msg == " ") {
+				$.post("https://master_chat/closeUI", JSON.stringify({}));
 				return;
-			}				
+			}			
+			
 			$(this).val("");
 			$.post("https://master_chat/sentMessage", JSON.stringify({message:msg}));
 		}

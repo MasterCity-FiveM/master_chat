@@ -5,6 +5,27 @@ Citizen.CreateThread(function()
 	Citizen.Wait(100)
 end)
 
+RegisterNetEvent('chat:addSuggestion')
+AddEventHandler("chat:addSuggestion", function(name, help, params)
+	suggestion = {{
+      name = name,
+      help = help
+    }}
+	
+	TriggerServerEvent("master_chat:clientCommand", name)
+	SendNUIMessage({
+		action = "suggestions",
+		suggestions = suggestion
+	})
+end)
+
+RegisterNetEvent('master_chat:ExecClientCommand')
+AddEventHandler("master_chat:ExecClientCommand", function(message)
+	if message:sub(1, 1) == '/' or message:sub(1, 1) == '.' then
+      ExecuteCommand(message:sub(2))
+    end
+end)
+	
 RegisterNetEvent("esx:playerLoaded")
 AddEventHandler("esx:playerLoaded", function(xPlayer)
 	PlayerData = xPlayer
@@ -54,6 +75,7 @@ end)
 RegisterNetEvent("chatMessage")
 AddEventHandler("chatMessage", function(msg)
 	message = {}
+	msg = msg:gsub("%^[0-9]", "")
 	message.sender = 0
 	message.message_type = 'info'
 	message.message = msg
@@ -64,6 +86,7 @@ end)
 RegisterNetEvent("chatMessageAlert")
 AddEventHandler("chatMessageAlert", function(msg)
 	message = {}
+	msg = msg:gsub("%^[0-9]", "")
 	message.sender = 0
 	message.message_type = 'error'
 	message.message = msg
@@ -75,6 +98,7 @@ end)
 RegisterNetEvent("chatMessageError")
 AddEventHandler("chatMessageError", function(name, msg)
 	message = {}
+	msg = msg:gsub("%^[0-9]", "")
 	message.sender = 0
 	message.message_type = 'error'
 	message.message = msg
@@ -86,6 +110,7 @@ RegisterNetEvent("master_chat:reciveMessage")
 AddEventHandler("master_chat:reciveMessage", function(message)
 	xPlayerID = GetPlayerServerId(PlayerId())
 	if xPlayerID == message.sender then
+		message.message = message.message:gsub("%^[0-9]", "")
 		SendNUIMessage({
 			action = "sent_message",
 			message = message.message,
@@ -101,6 +126,8 @@ AddEventHandler("master_chat:reciveMessage", function(message)
 				exports.pNotify:SendNotification({text = message.name .. ": " .. message.message, type = "info", layout = 'topLeft', timeout = 1000})
 			end
 			
+			message.message = message.message:gsub("%^[0-9]", "")
+			
 			SendNUIMessage({
 				action = "receive_message",
 				message = message.message,
@@ -109,6 +136,8 @@ AddEventHandler("master_chat:reciveMessage", function(message)
 			})
 		end
 	elseif message.message_type == 'error' then
+		message.message = message.message:gsub("%^[0-9]", "")
+		
 		SendNUIMessage({
 			action = "receive_message",
 			message = message.message,
@@ -116,6 +145,8 @@ AddEventHandler("master_chat:reciveMessage", function(message)
 			message_type = message.message_type
 		})
 	elseif message.message_type == 'info' then
+		message.message = message.message:gsub("%^[0-9]", "")
+		
 		SendNUIMessage({
 			action = "receive_message",
 			message = message.message,
