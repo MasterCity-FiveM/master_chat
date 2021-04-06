@@ -97,15 +97,13 @@ $(document).ready(function () {
 		}
 	};
 	
-	$(".message").on('keypress', function (e) {
+	$("#message").on('keydown', function (e) {
 		if (e.key === 'Enter' || e.keyCode === 13) {
-			msg = $(this).val();
-
-			if(msg == "" || msg == " ") {
+			var msg = $("#message").val();
+			if(msg === "" || msg === " ") {
 				$.post("https://master_chat/closeUI", JSON.stringify({}));
 				return;
-			}			
-			
+			}
 			$(this).val("");
 			$.post("https://master_chat/sentMessage", JSON.stringify({message:msg}));
 		}

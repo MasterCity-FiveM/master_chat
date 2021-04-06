@@ -82,7 +82,7 @@ AddEventHandler('master_chat:newMessage', function(message)
 	
 	sent_message.sender = _source
 	sent_message.coords = message.coords
-	sent_message.range = 10
+	sent_message.range = 15
 	sent_message.message_type = 'local'
 	
 	if isCommand(sent_message.message, _source, sent_message) then
