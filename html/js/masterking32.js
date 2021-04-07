@@ -41,6 +41,7 @@ $(document).ready(function () {
 			$('.box100').scrollTop($('.box100')[0].scrollHeight);
 			if (server_suggestions == false) {
 				$.post("https://master_chat/GetSuggestions", JSON.stringify({}));
+				server_suggestions = true;
 			}
 			window.scrollTo(0,document.body.scrollHeight);
 		} else if (event.data.action == "hide") {
@@ -48,17 +49,8 @@ $(document).ready(function () {
 		} else if (event.data.action == "suggestions") {
 			Sugs = event.data.suggestions;
 			for (var prop in Sugs) {
-				for (a in AutoCompleteOptions.data)
-				{
-					if (a.name == Sugs[prop].name) {
-						continue;
-					}
-				}
-				
 				AutoCompleteOptions.data.push({name: Sugs[prop].name, help: Sugs[prop].help});
 			}
-			
-			server_suggestions = true
 		} else if (event.data.action == "sent_message") {
 			$(".box100").append('<div class="sent amessage"><p class="name">' + htmlEntities(event.data.name) + ':</p><p>' + htmlEntities(event.data.message) + '</p></div><div style="clear:both;"></div>');
 
