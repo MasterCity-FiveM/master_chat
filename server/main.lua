@@ -122,7 +122,7 @@ function ExecuteMCommand(command, src, message)
 		return
 	end
 	
-	if Commands[command:lower()].rank > 0 and xPlayer.get("aduty") ~= true and Whiltelist_commands[command:lower()] == nil then
+	if Commands[command:lower()].rank > 0 and xPlayer.getRank() <= 9 and xPlayer.get("aduty") ~= true and Whiltelist_commands[command:lower()] == nil then
 		sent_message.message_type = 'error'
 		sent_message.message = 'لطفا حالت گیم مستر خود را فعال کنید.'
 		TriggerClientEvent("master_chat:reciveMessage", src, sent_message)
