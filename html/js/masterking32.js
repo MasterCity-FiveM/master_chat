@@ -32,11 +32,30 @@
 };
 
 var server_suggestions = false;
+var store = {
+
+    keyCount:0,
+    commandCount:0,
+    prevCommand:[],
+    put : function(val) {        
+        this.commandCount++;
+        this.keyCount = this.commandCount;
+        this.prevCommand.push(val);        
+    },
+    get : function() {
+        this.keyCount--;
+        if(typeof this.prevCommand[this.keyCount] !== "undefined") {
+            return this.prevCommand[this.keyCount];
+        }    
+    }    
+
+}
 
 $(document).ready(function () {
 	window.addEventListener("message", function (event) {
 		if (event.data.action == "show") {
 			$(".ui").fadeIn();
+			$("#message").val("");
 			$("#message").focus();
 			$('.box100').scrollTop($('.box100')[0].scrollHeight);
 			if (server_suggestions == false) {
@@ -97,7 +116,14 @@ $(document).ready(function () {
 				return;
 			}
 			$(this).val("");
+			store.put(msg)
 			$.post("https://master_chat/sentMessage", JSON.stringify({message:msg}));
+		}
+	});
+	
+	$("#message").on('keydown', function (e) {
+		if (e.keyCode === 38) {
+			$(this).val(store.get());
 		}
 	});
 
