@@ -6,6 +6,7 @@ Whiltelist_commands = {
 	aduty = true,
 	gm = true,
 	a = true,
+	rl = true,
 }
 
 TriggerEvent("esx:getSharedObject", function(obj) 
