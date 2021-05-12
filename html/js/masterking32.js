@@ -54,7 +54,7 @@ var store = {
 $(document).ready(function () {
 	window.addEventListener("message", function (event) {
 		if (event.data.action == "show") {
-			$(".ui").fadeIn();
+			$(".ui").show();
 			$("#message").val("");
 			$("#message").focus();
 			$('.box100').scrollTop($('.box100')[0].scrollHeight);
@@ -90,7 +90,7 @@ $(document).ready(function () {
 	});
 	
 	function closeUI() {
-		$(".ui").fadeOut();
+		$(".ui").hide();
 	}
 	
 	document.onkeydown = function(evt) {
