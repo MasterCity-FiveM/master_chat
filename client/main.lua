@@ -123,7 +123,7 @@ AddEventHandler("master_chat:reciveMessage", function(message)
 		if(Vdist(playerCoords.x, playerCoords.y, playerCoords.z, playerCoords2.x, playerCoords2.y, playerCoords2.z) < message.range) then
 			
 			if message.message_type == 'local' then
-				exports.pNotify:SendNotification({text = message.name .. ": " .. message.message, type = "info", layout = 'centerLeft', timeout = 1500})
+				exports.pNotify:SendNotification({text = message.name .. ": " .. message.message, type = "info", layout = 'centerLeft', timeout = 4000})
 			end
 			
 			message.message = message.message:gsub("%^[0-9]", "")
