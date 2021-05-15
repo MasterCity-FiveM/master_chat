@@ -92,7 +92,7 @@ AddEventHandler("chatMessageAlert", function(msg)
 	message.message = msg
 	message.name = "MasterCity.ir"
 	TriggerEvent("master_chat:reciveMessage", message)
-	exports.pNotify:SendNotification({text = message.message, type = "error", layout = 'centerLeft', timeout = 6000})
+	exports.pNotify:SendNotification({text = message.message, type = "error", layout = 'centerLeft', timeout = 8000})
 end)
 
 RegisterNetEvent("chatMessageError")
