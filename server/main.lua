@@ -17,7 +17,7 @@ while ESX == nil do
 	Citizen.Wait(1)
 end
 Citizen.CreateThread(function()
-	while ESX == nil or ESX.Items == nil or #ESX.Items < 1 do
+	while ESX == nil or ESX.Items == nil do
 		TriggerEvent("esx:getSharedObject", function(obj) 
 			ESX = obj
 		end)
