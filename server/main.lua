@@ -1,3 +1,4 @@
+
 ESX = nil
 LastChats, Commands, Suggestions = {}, {}, {}
 ServerName = "MasterCity.iR"
@@ -24,6 +25,11 @@ Citizen.CreateThread(function()
 		
 		Citizen.Wait(500)
 	end
+	
+	Citizen.Wait(20000)
+	TriggerEvent("esx:getSharedObject", function(obj) 
+		ESX = obj
+	end)
 end)
 
 ESX.AddCustomFunction("AddCommand", function(name, rank, cb, params, help, ctype)
