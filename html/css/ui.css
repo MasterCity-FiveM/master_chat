@@ -13,10 +13,10 @@ body{
 }
 
 .ui {
-	background: rgba(255,255,255,0.6);
-	width: 700px;
+	background: rgba(255,255,255,0.4);
+	width: 600px;
 	border-radius: 10px;
-	margin: 50px auto;
+	margin: 100px auto;
 	padding: 20px;
 	display: none;
 }
